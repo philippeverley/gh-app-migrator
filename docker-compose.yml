@@ -1,0 +1,66 @@
+
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  # Mock backend for testing
+  backend:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./backend:/app
+    command: >
+      sh -c "echo 'console.log(\"Request received:\", req.body);
+             const http = require(\"http\");
+             const server = http.createServer((req, res) => {
+               if (req.method === \"OPTIONS\") {
+                 res.writeHead(204, {
+                   \"Access-Control-Allow-Origin\": \"*\",
+                   \"Access-Control-Allow-Methods\": \"POST, GET, OPTIONS\",
+                   \"Access-Control-Allow-Headers\": \"Content-Type\"
+                 });
+                 res.end();
+                 return;
+               }
+               
+               if (req.method === \"POST\" && req.url === \"/contact\") {
+                 let body = \"\";
+                 req.on(\"data\", chunk => { body += chunk.toString(); });
+                 req.on(\"end\", () => {
+                   console.log(\"Received contact form data:\", body);
+                   res.writeHead(200, {
+                     \"Content-Type\": \"application/json\",
+                     \"Access-Control-Allow-Origin\": \"*\"
+                   });
+                   res.end(JSON.stringify({ 
+                     success: true, 
+                     message: \"Message received successfully!\" 
+                   }));
+                 });
+               } else {
+                 res.writeHead(404, {\"Content-Type\": \"application/json\"});
+                 res.end(JSON.stringify({ success: false, message: \"Not Found\" }));
+               }
+             });
+             
+             server.listen(3000, () => {
+               console.log(\"Backend server running on port 3000\");
+             });' > server.js && node server.js"
+    ports:
+      - "3000:3000"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
