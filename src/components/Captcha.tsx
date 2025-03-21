@@ -64,7 +64,7 @@ const Captcha = ({ onVerify }: CaptchaProps) => {
       
       {verified ? (
         <div className="flex items-center space-x-2">
-          <Checkbox id="verified" checked={verified} readOnly />
+          <Checkbox id="verified" checked={verified} />
           <label
             htmlFor="verified"
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
