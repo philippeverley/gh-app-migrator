@@ -2,28 +2,15 @@
 version: '3.8'
 
 services:
-  frontend:
+  app:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "80:80"
-    depends_on:
-      - email-service
-    networks:
-      - app-network
-
-  email-service:
-    image: node:20-alpine
-    working_dir: /app
-    volumes:
-      - ./email-server:/app
-    ports:
       - "3000:3000"
     env_file:
       - ./email-server/.env
-    command: >
-      sh -c "npm install express body-parser cors nodemailer dotenv && node email-server.js"
     networks:
       - app-network
 
