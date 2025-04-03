@@ -17,8 +17,18 @@ export type ContactResponse = {
  * Send contact form data to the backend
  */
 export const submitContactForm = async (formData: ContactFormData): Promise<ContactResponse> => {
-  return fetchAPI<ContactResponse>('/contact', {
-    method: 'POST',
-    body: formData
-  });
+  try {
+    const response = await fetchAPI<ContactResponse>('/contact', {
+      method: 'POST',
+      body: formData
+    });
+    
+    return response;
+  } catch (error) {
+    console.error('Contact form submission error:', error);
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'An unknown error occurred'
+    };
+  }
 };

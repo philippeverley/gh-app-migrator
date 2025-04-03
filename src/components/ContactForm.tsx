@@ -54,11 +54,12 @@ const ContactForm = () => {
     setIsSubmitting(true);
     try {
       const response = await submitContactForm(values);
-      if (response.success) {
+      
+      if (response && response.success === true) {
         toast.success('Message sent successfully!');
         form.reset();
       } else {
-        toast.error(response.message || 'Failed to send message.');
+        toast.error(response?.message || 'Failed to send message.');
       }
     } catch (error) {
       console.error('Form submission error:', error);
