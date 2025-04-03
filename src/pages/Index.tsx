@@ -1,18 +1,22 @@
 
 import ContactForm from "@/components/ContactForm";
+import DataRequestForm from "@/components/DataRequestForm";
 
 const Index = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background p-4">
-      <div className="w-full max-w-4xl mx-auto">
-        <div className="text-center mb-8">
+      <div className="w-full max-w-6xl mx-auto">
+        <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4">Get in Touch</h1>
           <p className="text-xl text-muted-foreground">
-            We'd love to hear from you. Send us a message using the form below.
+            Contact us or request data using the forms below.
           </p>
         </div>
         
-        <ContactForm />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <ContactForm />
+          <DataRequestForm />
+        </div>
       </div>
     </div>
   );
