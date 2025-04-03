@@ -1,6 +1,7 @@
 
 import ContactForm from "@/components/ContactForm";
 import DataRequestForm from "@/components/DataRequestForm";
+import DataInquiryForm from "@/components/DataInquiryForm";
 
 const Index = () => {
   return (
@@ -13,9 +14,10 @@ const Index = () => {
           </p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <ContactForm />
           <DataRequestForm />
+          <DataInquiryForm />
         </div>
       </div>
     </div>

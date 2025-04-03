@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
 // Contact endpoint
 app.post('/contact', async (req, res) => {
   try {
-    const { name, email, message, captchaToken } = req.body;
+    const { name, email, message, captchaToken, subject } = req.body;
     
     console.log('Received contact form submission:', { name, email, message });
     
@@ -45,7 +45,7 @@ app.post('/contact', async (req, res) => {
     const mailOptions = {
       from: process.env.EMAIL_FROM,
       to: process.env.EMAIL_TO,
-      subject: `Contact Form Submission from ${name}`,
+      subject: subject ? subject : `Contact Form Submission from ${name}`,
       text: `
 Name: ${name}
 Email: ${email}

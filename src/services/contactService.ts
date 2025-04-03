@@ -6,6 +6,7 @@ export type ContactFormData = {
   email: string;
   message: string;
   captchaToken: string;
+  subject?: string; // Optional subject field
 };
 
 export type ContactResponse = {
